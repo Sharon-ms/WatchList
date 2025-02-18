@@ -1,0 +1,29 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const db = require('./dal/db');
+
+const usersRouter = require('./routers/users.router');
+const seriesRouter = require('./routers/series.router');
+const episodesRouter = require('./routers/episodes.router');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+app.use('/users', usersRouter);
+app.use('/series', seriesRouter);
+app.use('/episodes', episodesRouter);
+
+(async () => {
+    try {
+        await db.sequelize.authenticate();
+        await db.sequelize.sync({ force: false });
+        app.listen(3000, () => {
+            console.log("listening on 3000")
+        })
+    }
+    catch (error) {
+        console.error('unable to connect to the database:', error);
+    }
+})()

@@ -1,0 +1,22 @@
+series
+
+    "title": "a",
+    "genre": "b",
+    "year": 1
+
+user
+
+    "name": "x",
+    "mail": "y"
+
+episode
+
+    "season": 1,
+    "episode": 1,
+    "SeriesId": 1
+
+watched
+
+    "userId": 1,
+    "episodeId": 1
+
