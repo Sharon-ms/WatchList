@@ -1,3 +1,0 @@
--- להתקין בצד לקוח --
-
-npm install react-scripts
