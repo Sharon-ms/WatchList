@@ -20,6 +20,18 @@ const seriesModel = (Sequelize) => {
             year: {
                 type: DataTypes.INTEGER,
                 required: true
+            },
+            seasons: {
+                type: DataTypes.INTEGER,
+                episodes: {
+                    type: DataTypes.INTEGER,
+                    required: true
+                },
+                required: true
+            },
+            img: {
+                type: DataTypes.STRING,
+                required: true
             }
         }
     )
