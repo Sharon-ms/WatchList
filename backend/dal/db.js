@@ -24,9 +24,6 @@ const Episode = episodesModel(sequelize);
 User.belongsToMany(Episode, { through: "watched" });
 Episode.belongsToMany(User, { through: "watched" });
 
-// Series.hasMany(Episode, { foreignKey: 'SeriesId' });
-// Episode.belongsTo(Series, { foreignKey: 'SeriesId' });
-
 Series.hasMany(Season, { foreignKey: 'seriesId' });
 Season.belongsTo(Series, { foreignKey: 'seriesId' });
 

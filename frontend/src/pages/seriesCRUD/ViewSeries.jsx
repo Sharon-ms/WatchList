@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import '../../css/viewSeries.css';
@@ -14,6 +14,8 @@ const ViewSeries = () => {
     const { series } = location.state || {};
 
     const [selectedSeason, setSelectedSeason] = useState(null);
+    const [seasons, setSeasons] = useState([]);
+
 
 
     const handleDeleteSeries = async () => {
@@ -30,6 +32,23 @@ const ViewSeries = () => {
     };
 
 
+    const fetchSeasons = async () => {
+        try {
+            const response = await axios.get(`${API}/seasons/${series.id}`, {
+            });
+            console.log(response);
+
+            setSeasons(response.data);
+        } catch (error) {
+            console.error('Error fetching series:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchSeasons();
+    }, []);
+
+
     const handleSeasonChange = (e) => {
         setSelectedSeason(Number(e.target.value)); // להמיר למספר
     };
@@ -44,8 +63,8 @@ const ViewSeries = () => {
                     src={series?.image} alt={series?.title} />
             </div>
             <h1>{series?.title || "Series not availble"}</h1>
-            <h4>{series.year}</h4>
-            <h4>{series.genre}</h4>
+            <h4>{series?.year}</h4>
+            <h4>{series?.genre}</h4>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, a nemo et, dolorem dicta rem incidunt molestiae tenetur itaque labore magnam nam! Deserunt sequi harum magni! Modi esse vel facere.</p>
             <Button variant="success" onClick={() => navigate('/edit_series', { state: { series } })}>
                 Edit Series
@@ -62,19 +81,24 @@ const ViewSeries = () => {
                 <h3>Select a season</h3>
                 <select onChange={handleSeasonChange}>
                     <option>Select a season</option>
-                    {series?.seasons?.map((season) => (
-                        <option key={season.seasonNum} value={season.seasonNum}>
-                            Season {season.seasonNum}
+                    {seasons?.map((season) => (
+                        <option key={season.seasonNumber} value={season.seasonNumber}>
+                            Season {season.seasonNumber}
                         </option>
                     ))}
                 </select>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
 
-                {selectedSeason !== null && (
+                {/* {selectedSeason !== null && (
                     <div>
                         <h3>Episodes:</h3>
                         <ul>
-                            {series?.seasons
-                                ?.find((season) => season.seasonNum === selectedSeason)
+                            {seasons?.find((season) => season?.seasonNum === selectedSeason)
                                 ?.episodes.map((episode, index) => (
                                     <li key={index}>
                                         {episode}
@@ -89,7 +113,7 @@ const ViewSeries = () => {
                                 ))}
                         </ul>
                     </div>
-                )}
+                )} */}
             </div>
 
         </div >

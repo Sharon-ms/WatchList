@@ -9,10 +9,13 @@ async function getAllSeasons(seriesId, pageNumber, pageSize) {
     });
 }
 
-// Get season by id
-async function getSeasonById(id) {
-    return Season.findByPk(id);
+// Get season by seriesId
+async function getSeasonsBySeriesId(seriesId) {
+    return Season.findAll({
+        where: { seriesId }
+    });
 }
+
 
 // Add new season
 async function addSeason(newSeason) {
@@ -31,7 +34,7 @@ async function deleteSeason(id) {
 
 module.exports = {
     getAllSeasons,
-    getSeasonById,
+    getSeasonsBySeriesId,
     addSeason,
     updateSeason,
     deleteSeason

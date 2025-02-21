@@ -4,8 +4,8 @@ async function getAllSeasons(seriesId, pageNumber, pageSize) {
     return seasonsDAL.getAllSeasons(seriesId, pageNumber, pageSize);
 }
 
-async function getSeasonById(id) {
-    return seasonsDAL.getSeasonById(id);
+async function getSeasonsBySeriesId(seriesId) {
+    return seasonsDAL.getSeasonsBySeriesId(seriesId);
 }
 
 async function addSeason(newSeason) {
@@ -22,7 +22,7 @@ async function deleteSeason(id) {
 
 module.exports = {
     getAllSeasons,
-    getSeasonById,
+    getSeasonsBySeriesId,
     addSeason,
     updateSeason,
     deleteSeason

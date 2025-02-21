@@ -13,6 +13,10 @@ const seasonsModel = (sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
+            seriesId: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW

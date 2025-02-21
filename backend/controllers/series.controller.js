@@ -25,43 +25,28 @@ async function getSeriesById(req, res) {
 
 async function addSeries(req, res) {
     try {
-        const { title, genre, image, year, seasons } = req.body;
-        const result = await seriesService.addSeries(newSeries);
+        const { title, seasonsNum, genre, image, year } = req.body;
 
         const newSeries = await seriesService.addSeries({
             title,
-            genre,
             image,
+            genre,
             year
         });
 
-        // עכשיו נוסיף את העונות והפרקים
-        // if (seasons && Array.isArray(seasons)) {
-        //     for (const season of seasons) {
-        //         // יצירת עונה חדשה
-        //         const newSeason = await seasonsService.addSeason({
-        //             seriesId: newSeries.id,
-        //             seasonNumber: season.seasonNumber
-        //         });
+        for (let i = 1; i <= seasonsNum; i++) {
+            await seasonsService.addSeason({
+                seriesId: newSeries.id,
+                seasonNumber: i
+            });
+        }
 
-        //         // אם יש פרקים לעונה, נוסיף אותם
-        //         if (season.episodes && Array.isArray(season.episodes)) {
-        //             for (const episode of season.episodes) {
-        //                 await Episode.create({
-        //                     seasonId: newSeason.id,
-        //                     title: episode.title
-        //                 });
-        //             }
-        //         }
-        //     }
-        // }
-
-    //     res.send(result)
-//     // }
-//     catch (err) {
-//         res.status(500).send(err.message)
-//     }
-// }
+        res.send(title, seasonsNum, genre, image, year)
+    }
+    catch (err) {
+        res.status(500).send(err.message)
+    }
+}
 
 async function updateSeries(req, res) {
     try {

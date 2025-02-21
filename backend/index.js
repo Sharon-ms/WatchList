@@ -5,7 +5,9 @@ const db = require('./dal/db');
 
 const usersRouter = require('./routers/users.router');
 const seriesRouter = require('./routers/series.router');
+const seasonsRouter = require('./routers/seasons.router');
 const episodesRouter = require('./routers/episodes.router');
+
 
 const app = express();
 app.use(cors());
@@ -13,6 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/users', usersRouter);
 app.use('/series', seriesRouter);
+app.use('/seasons', seasonsRouter);
 app.use('/episodes', episodesRouter);
 
 (async () => {
