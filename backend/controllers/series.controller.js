@@ -1,4 +1,5 @@
 const seriesService = require('../services/series.service');
+const seasonsService = require('../services/seasons.service');
 
 async function getAllSeries(req, res) {
     try {
@@ -9,14 +10,13 @@ async function getAllSeries(req, res) {
     catch (err) {
         res.status(500).send(err.message)
     }
-
 }
 
 async function getSeriesById(req, res) {
     try {
         const id = Number(req.params.id);
         const series = await seriesService.getSeriesById(id);
-        res.send(series)
+        res.send(series);
     }
     catch (err) {
         res.status(500).send(err.message)
@@ -25,8 +25,37 @@ async function getSeriesById(req, res) {
 
 async function addSeries(req, res) {
     try {
-        const newSerie = req.body;
-        const result = await seriesService.addSeries(newSerie);
+        const { title, genre, image, year, seasons } = req.body;
+        const result = await seriesService.addSeries(newSeries);
+
+        const newSeries = await seriesService.addSeries({
+            title,
+            genre,
+            image,
+            year
+        });
+
+        // עכשיו נוסיף את העונות והפרקים
+        // if (seasons && Array.isArray(seasons)) {
+        //     for (const season of seasons) {
+        //         // יצירת עונה חדשה
+        //         const newSeason = await seasonsService.addSeason({
+        //             seriesId: newSeries.id,
+        //             seasonNumber: season.seasonNumber
+        //         });
+
+        //         // אם יש פרקים לעונה, נוסיף אותם
+        //         if (season.episodes && Array.isArray(season.episodes)) {
+        //             for (const episode of season.episodes) {
+        //                 await Episode.create({
+        //                     seasonId: newSeason.id,
+        //                     title: episode.title
+        //                 });
+        //             }
+        //         }
+        //     }
+        // }
+
         res.send(result)
     }
     catch (err) {

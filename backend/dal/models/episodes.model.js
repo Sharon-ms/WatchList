@@ -1,7 +1,33 @@
+// const { DataTypes } = require("sequelize");
+
+// const episodessModel = (Sequelize) => {
+//     return Sequelize.define(
+//         'Episode',
+//         {
+//             id: {
+//                 type: DataTypes.INTEGER,
+//                 autoIncrement: true,
+//                 primaryKey: true
+//             },
+//             season: {
+//                 type: DataTypes.INTEGER,
+//                 required: true
+//             },
+//             episode: {
+//                 type: DataTypes.INTEGER,
+//                 required: true
+//             }
+//         }
+//     )
+// }
+
+// module.exports = episodessModel;
+
+
 const { DataTypes } = require("sequelize");
 
-const episodessModel = (Sequelize) => {
-    return Sequelize.define(
+const episodeModel = (sequelize) => {
+    return sequelize.define(
         'Episode',
         {
             id: {
@@ -9,16 +35,20 @@ const episodessModel = (Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true
             },
-            season: {
-                type: DataTypes.INTEGER,
-                required: true
+            title: {
+                type: DataTypes.STRING,
+                allowNull: false
             },
-            episode: {
-                type: DataTypes.INTEGER,
-                required: true
+            createdAt: {
+                type: DataTypes.DATE,
+                defaultValue: DataTypes.NOW
+            },
+            updatedAt: {
+                type: DataTypes.DATE,
+                defaultValue: DataTypes.NOW
             }
         }
-    )
-}
+    );
+};
 
-module.exports = episodessModel;
+module.exports = episodeModel;

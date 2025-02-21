@@ -1,116 +1,74 @@
-import React from 'react'
+import React, { useState, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import { GeneralContext } from '../../App';
 
 const EditSeries = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { API } = useContext(GeneralContext);
+    const { series } = location.state || {};
+
+    const [formData, setFormData] = useState({
+        title: series?.title || "",
+        image: series?.image || "",
+        genre: series?.genre || "",
+        year: series?.year || ""
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSave = async () => {
+        try {
+            await axios.patch(`${API}/series/${series.id}`, formData);
+            alert('Series updated successfully');
+            navigate('/');
+        } catch (e) {
+            console.error('Error updating series:', e);
+            alert('Failed to update series. Please try again later.');
+        }
+    };
+
     return (
-        <div>
-            EditSeries
-        </div>
-    )
-}
+        <Container className="mt-5">
+            <Row className="justify-content-center">
+                <Col xs={12} sm={8} md={6} lg={4}>
+                    <Button variant="primary" onClick={() => navigate(-1)}>
+                        Back
+                    </Button>
+                    <h1>Edit Series</h1>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" name="title" value={formData.title} onChange={handleChange} />
+                        </Form.Group>
 
-export default EditSeries
+                        <Form.Group>
+                            <Form.Label>Image URL</Form.Label>
+                            <Form.Control type="text" name="image" value={formData.image} onChange={handleChange} />
+                        </Form.Group>
 
+                        <Form.Group>
+                            <Form.Label>Genre</Form.Label>
+                            <Form.Control type="text" name="genre" value={formData.genre} onChange={handleChange} />
+                        </Form.Group>
 
+                        <Form.Group>
+                            <Form.Label>Year</Form.Label>
+                            <Form.Control type="number" name="year" value={formData.year} onChange={handleChange} />
+                        </Form.Group>
 
-// import React, { useState } from "react";
-// import { Form, Button, Container, Row, Col } from "react-bootstrap";
+                        <Button variant="success" onClick={handleSave} className="mt-3">
+                            Save Changes
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
+    );
+};
 
-// const EditSeries = ({ seriesData }) => {
-//     const [formData, setFormData] = useState(seriesData);
-//     const [selectedSeason, setSelectedSeason] = useState(
-//         series.seasons[0]?.seasonNum || null
-//     );
-
-//     const handleChange = (e) => {
-//         const { name, value, files } = e.target;
-//         if (name === "image") {
-//             setFormData({ ...formData, [name]: files[0] });
-//         } else {
-//             setFormData({ ...formData, [name]: value });
-//         }
-//     };
-
-//     const handleSeasonChange = (e) => {
-//         setSelectedSeason(Number(e.target.value));
-//     };
-
-//     const handleEpisodeChange = (seasonNum, index, value) => {
-//         const updatedSeasons = formData.seasons.map((season) => {
-//             if (season.seasonNum === seasonNum) {
-//                 const updatedEpisodes = [...season.episodes];
-//                 updatedEpisodes[index] = Number(value);
-//                 return { ...season, episodes: updatedEpisodes };
-//             }
-//             return season;
-//         });
-//         setFormData({ ...formData, seasons: updatedSeasons });
-//     };
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         console.log("Updated Series Data:", formData);
-//     };
-
-//     return (
-//         <Container className="mt-5">
-//             <Row className="justify-content-center">
-//                 <Col xs={12} sm={8} md={6} lg={4}>
-//                     <h2>Edit Series</h2>
-//                     <Form onSubmit={handleSubmit}>
-//                         <Form.Group className="mb-3" controlId="formTitle">
-//                             <Form.Label>Title</Form.Label>
-//                             <Form.Control
-//                                 type="text"
-//                                 name="title"
-//                                 value={formData.title}
-//                                 onChange={handleChange}
-//                             />
-//                         </Form.Group>
-
-//                         <Form.Group className="mb-3" controlId="formImage">
-//                             <Form.Label>Image</Form.Label>
-//                             <Form.Control type="file" name="image" onChange={handleChange} />
-//                         </Form.Group>
-
-//                         <Form.Group className="mb-3">
-//                             <Form.Label>Season</Form.Label>
-//                             <Form.Select onChange={handleSeasonChange} value={selectedSeason}>
-//                                 {formData.seasons.map((season) => (
-//                                     <option key={season.seasonNum} value={season.seasonNum}>
-//                                         Season {season.seasonNum}
-//                                     </option>
-//                                 ))}
-//                             </Form.Select>
-//                         </Form.Group>
-
-//                         {selectedSeason && (
-//                             <>
-//                                 <h5>Episodes</h5>
-//                                 {formData.seasons
-//                                     .find((season) => season.seasonNum === selectedSeason)
-//                                     ?.episodes.map((episode, index) => (
-//                                         <Form.Group className="mb-2" key={index}>
-//                                             <Form.Label>Episode {index + 1}</Form.Label>
-//                                             <Form.Control
-//                                                 type="number"
-//                                                 value={episode}
-//                                                 onChange={(e) =>
-//                                                     handleEpisodeChange(selectedSeason, index, e.target.value)
-//                                                 }
-//                                             />
-//                                         </Form.Group>
-//                                     ))}
-//                             </>
-//                         )}
-
-//                         <Button variant="success" type="submit">
-//                             Save Changes
-//                         </Button>
-//                     </Form>
-//                 </Col>
-//             </Row>
-//         </Container>
-//     );
-// };
-
-// export default EditSeries;
+export default EditSeries;

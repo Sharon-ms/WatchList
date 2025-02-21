@@ -19,8 +19,8 @@ app.use('/episodes', episodesRouter);
     try {
         await db.sequelize.authenticate();
         await db.sequelize.sync({ force: false });
-        app.listen(3000, () => {
-            console.log("listening on 3000")
+        app.listen(3001, () => {
+            console.log("listening on 3001")
         })
     }
     catch (error) {

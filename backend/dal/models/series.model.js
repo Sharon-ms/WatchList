@@ -1,7 +1,43 @@
+// const { DataTypes } = require("sequelize");
+
+// const seriesModel = (Sequelize) => {
+//     return Sequelize.define(
+//         'Series',
+//         {
+//             id: {
+//                 type: DataTypes.INTEGER,
+//                 autoIncrement: true,
+//                 primaryKey: true
+//             },
+//             title: {
+//                 type: DataTypes.STRING,
+//                 required: true
+//             },
+//             image: {
+//                 type: DataTypes.STRING,
+//                 required: true
+//             },
+//             genre: {
+//                 type: DataTypes.STRING,
+//                 required: true
+//             },
+//             year: {
+//                 type: DataTypes.INTEGER,
+//                 required: true
+//             }
+//         }
+//     )
+// }
+
+// module.exports = seriesModel;
+
+
+
+
 const { DataTypes } = require("sequelize");
 
-const seriesModel = (Sequelize) => {
-    return Sequelize.define(
+const seriesModel = (sequelize) => {
+    return sequelize.define(
         'Series',
         {
             id: {
@@ -11,30 +47,22 @@ const seriesModel = (Sequelize) => {
             },
             title: {
                 type: DataTypes.STRING,
-                required: true
+                allowNull: false
+            },
+            image: {
+                type: DataTypes.STRING,
+                allowNull: false
             },
             genre: {
                 type: DataTypes.STRING,
-                required: true
+                allowNull: false
             },
             year: {
                 type: DataTypes.INTEGER,
                 required: true
-            },
-            seasons: {
-                type: DataTypes.INTEGER,
-                episodes: {
-                    type: DataTypes.INTEGER,
-                    required: true
-                },
-                required: true
-            },
-            img: {
-                type: DataTypes.STRING,
-                required: true
             }
         }
-    )
-}
+    );
+};
 
 module.exports = seriesModel;

@@ -1,9 +1,2 @@
--- להתקין בצד לקוח --
-
-npm i react-router-dom
-
-npm install react-bootstrap
-npm install bootstrap
-
------
-npm install dotenv
+בצד לקוח:
+npm i axios
