@@ -1,41 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import { GeneralContext } from '../../App';
+import axios from 'axios';
 
 
 const CreateSeries = () => {
     const navigate = useNavigate();
+    const { API } = useContext(GeneralContext);
     const [formData, setFormData] = useState({
         id: '',
         title: '',
-        image: null,
+        image: '',
+        genre: '',
+        year: '',
     });
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === 'image') {
-            setFormData({
-                ...formData,
-                [name]: files[0],
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        }
+        const { name, value } = e.target;
+
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formDataToSubmit = new FormData();
-        formDataToSubmit.append('title', formData.title);
-        formDataToSubmit.append('image', formData.image);
+        if (!formData.title || !formData.image || !formData.genre || !formData.year) {
+            alert('Please fill in all fields, including the image, genre, and year.');
+            return;
+        }
 
-        console.log('Form submitted:', formDataToSubmit);
-        navigate('/')
+        const dataToSubmit = {
+            title: formData.title,
+            image: formData.image,
+            genre: formData.genre,
+            year: formData.year
+        };
+
+
+
+        try {
+            const response = await axios.post(`${API}/series`, dataToSubmit,
+                {
+                    headers: { 'Accept': 'application/json' }
+                }
+            );
+
+            console.log('Series created successfully:', response.data);
+            navigate('/');
+        } catch (error) {
+            console.error('Error creating series:', error);
+            alert('Error creating series, please try again.');
+        }
+
     };
+
 
     return (
         <div>
@@ -59,15 +82,38 @@ const CreateSeries = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formImage">
-                                <Form.Label>Image</Form.Label>
+                                <Form.Label>Image URL</Form.Label>
                                 <Form.Control
-                                    type="file"
-                                    placeholder="Password"
+                                    type="text"
+                                    placeholder="Enter image URL"
                                     name="image"
                                     onChange={handleChange}
-                                    accept="image/*" // Accept only images 
+                                    value={formData.image}
                                 />
                             </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formGenre">
+                                <Form.Label>Genre</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter genre"
+                                    name="genre"
+                                    onChange={handleChange}
+                                    value={formData.genre}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formYear">
+                                <Form.Label>Year</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter year"
+                                    name="year"
+                                    onChange={handleChange}
+                                    value={formData.year}
+                                />
+                            </Form.Group>
+
 
 
                             <Button variant="success" type="submit">

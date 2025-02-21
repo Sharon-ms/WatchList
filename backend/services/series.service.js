@@ -1,4 +1,4 @@
-const seriesDAL = require("../DAL/series.dal");
+const seriesDAL = require("../dal/series.dal");
 
 async function getAllSeries(pageNumber, pageSize) {
     return seriesDAL.getAllSeries(pageNumber, pageSize);

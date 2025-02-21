@@ -1,12 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import Routes from './routes/RoutesC';
+import React, { createContext } from 'react';
+
+
+export const GeneralContext = createContext();
 
 function App() {
+  const API = 'http://localhost:3001';
+
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <GeneralContext.Provider value={{ API }}>
+      <div className="App">
+        <Routes />
+      </div>
+    </GeneralContext.Provider>
   );
 }
 
