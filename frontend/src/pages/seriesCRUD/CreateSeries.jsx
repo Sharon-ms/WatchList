@@ -94,7 +94,7 @@ const CreateSeries = () => {
 
                             <Form.Group className="mb-3" controlId="formGenre">
                                 <Form.Label>Genre</Form.Label>
-                                <Form.Select>
+                                <Form.Select name="genre" value={formData.genre} onChange={handleChange}>
                                     <option value="">Select genre</option>
                                     <option value="Action">Action</option>
                                     <option value="Drama">Drama</option>
