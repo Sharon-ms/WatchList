@@ -44,6 +44,10 @@ const Home = () => {
 
     return (
         <div>
+                        <Button variant="primary" onClick={() => navigate("/view_users")}>
+                            Users list
+                        </Button>
+            
             <h1>Welcome to WatchList</h1>
             <Button variant="success" onClick={() => navigate('/create_series')}>Add a series</Button>
 
