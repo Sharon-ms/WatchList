@@ -25,10 +25,10 @@ async function getSeriesById(req, res) {
 
 async function addSeries(req, res) {
     try {
-        const { title, genre, image, year, seasons } = req.body;
-        const result = await seriesService.addSeries(newSeries);
+        const { title, genre, image, year } = req.body;
+        // const result = await seriesService.addSeries(newSeries);
 
-        const newSeries = await seriesService.addSeries({
+        const result = await seriesService.addSeries({
             title,
             genre,
             image,

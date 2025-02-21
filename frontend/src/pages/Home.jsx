@@ -1,58 +1,23 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/home.css';
 import { GeneralContext } from '../App';
 import axios from 'axios';
 
-
-
 const Home = () => {
     const navigate = useNavigate();
     const { API } = useContext(GeneralContext);
     const [series, setSeries] = useState([]);
+    const [filteredSeries, setFilteredSeries] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [genreFilter, setGenreFilter] = useState('');
+    const [yearFilter, setYearFilter] = useState('');
 
-    // const seriesList = [
-    //     {
-    //         id: 1,
-    //         title: "Seinfeld",
-    //         genre,
-    //         image: "https://via.placeholder.com/150",
-    //         seasons: [
-    //             {
-    //                 seasonNum: 1,
-    //                 episodes: [
-    //                     1, 2, 3, 4, 5, 6
-    //                 ]
-    //             },
-    //             {
-    //                 seasonNum: 2,
-    //                 episodes: [
-    //                     1, 2, 3, 4,
-    //                 ]
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: 2, title: "Breaking Bad", image: "https://via.placeholder.com/150",
-    //         seasons: [
-    //             {
-    //                 seasonNum: 1,
-    //                 episodes: [
-    //                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-    //                 ]
-    //             },
-    //             {
-    //                 seasonNum: 2,
-    //                 episodes: [
-    //                     1, 2, 3,
-    //                 ]
-    //             },
-    //         ],
-    //     },
-    // ];
+    useEffect(() => {
+        fetchSeries();
+    }, []);
 
     const fetchSeries = async (pageNumber = 1, pageSize = 10) => {
         try {
@@ -61,39 +26,76 @@ const Home = () => {
             });
 
             setSeries(response.data);
+            setFilteredSeries(response.data);
         } catch (error) {
             console.error('Error fetching series:', error);
         }
     };
 
+    // פונקציה לסינון הסדרות
     useEffect(() => {
-        fetchSeries(1, 10);
-    }, []);
-
-
+        let filtered = series.filter(s =>
+            s.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (genreFilter ? s.genre.toLowerCase().includes(genreFilter.toLowerCase()) : true) &&
+            (yearFilter ? s.year.toString() === yearFilter : true)
+        );
+        setFilteredSeries(filtered);
+    }, [searchTerm, genreFilter, yearFilter, series]);
 
     return (
         <div>
             <h1>Welcome to WatchList</h1>
-            <Button variant="success" onClick={() => navigate('/create_series')}
-            >Add a series</Button>
+            <Button variant="success" onClick={() => navigate('/create_series')}>Add a series</Button>
+
+            {/* אזור החיפוש */}
+            <Container className="mt-4">
+                <Row className="mb-3">
+                    <Col md={4}>
+                        <FormControl
+                            type="text"
+                            placeholder="Search by name"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <Form.Select value={genreFilter} onChange={(e) => setGenreFilter(e.target.value)}>
+                            <option value="">Choose Genre</option>
+                            <option value="Action">Action</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Drama">Drama</option>
+                        </Form.Select>
+                    </Col>
+                    <Col md={4}>
+                        <FormControl
+                            type="number"
+                            placeholder="שנת יציאה"
+                            value={yearFilter}
+                            onChange={(e) => setYearFilter(e.target.value)}
+                        />
+                    </Col>
+                </Row>
+            </Container>
+
+            {/* אזור הצגת הסדרות */}
             <Container>
                 <Row>
-                    {series.map((series) => (
+                    {filteredSeries.map((series) => (
                         <Col key={series.id} md={4}>
                             <div
                                 onClick={() => navigate('/view_series', { state: { series } })}
-                                style={{ cursor: 'pointer', padding: '50px' }}
+                                style={{ cursor: 'pointer', padding: '20px' }}
                             >
-                                <img className='seriesImg' src={series?.image} alt={series?.title} />
+                                <img className='seriesImg' src={series?.image} alt={series?.title}
+                                    style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '10px' }} />
                                 <h5>{series.title}</h5>
                             </div>
                         </Col>
                     ))}
                 </Row>
             </Container>
-        </div >
+        </div>
     )
 }
 
-export default Home
+export default Home;
