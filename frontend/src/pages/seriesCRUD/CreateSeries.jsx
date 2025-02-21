@@ -53,7 +53,7 @@ const CreateSeries = () => {
             console.log('Series created successfully:', response.data);
             navigate('/');
         } catch (error) {
-            console.error('Error creating series:', error);
+            console.error('Error creating series:', error.message);
             alert('Error creating series, please try again.');
         }
 

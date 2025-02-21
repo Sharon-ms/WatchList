@@ -25,15 +25,26 @@ async function getSeriesById(req, res) {
 
 async function addSeries(req, res) {
     try {
-        const { title, genre, image, year, seasons } = req.body;
-        const result = await seriesService.addSeries(newSeries);
+        const newSerie = req.body;
+        const result = await seriesService.addSeries(newSerie);
+        res.send(result)
+    }
+    catch (err) {
+        res.status(500).send(err.message)
+    }
+}
 
-        const newSeries = await seriesService.addSeries({
-            title,
-            genre,
-            image,
-            year
-        });
+// async function addSeries(req, res) {
+//     try {
+//         const { title, image, genre, year } = req.body;
+//         const result = await seriesService.addSeries(newSeries);
+
+//         const newSeries = await seriesService.addSeries({
+//             title,
+//             image,
+//             genre,
+//             year
+//         });
 
         // עכשיו נוסיף את העונות והפרקים
         // if (seasons && Array.isArray(seasons)) {
@@ -56,12 +67,12 @@ async function addSeries(req, res) {
         //     }
         // }
 
-        res.send(result)
-    }
-    catch (err) {
-        res.status(500).send(err.message)
-    }
-}
+    //     res.send(result)
+//     // }
+//     catch (err) {
+//         res.status(500).send(err.message)
+//     }
+// }
 
 async function updateSeries(req, res) {
     try {

@@ -1,6 +1,7 @@
 series
 
     "title": "a",
+    "image": "sss",
     "genre": "b",
     "year": 1
 
