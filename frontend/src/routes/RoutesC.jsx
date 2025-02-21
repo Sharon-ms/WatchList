@@ -13,11 +13,13 @@ const RoutesC = () => {
         <div>
             <Routes>
                 <Route path="/" element={<Home />} />
+
                 <Route path="/view_series" element={<ViewSeries />} />
                 <Route path="/create_series" element={<CreateSeries />} />
                 <Route path="/edit_series" element={<EditSeries />} />
+
                 <Route path="/view_users" element={<ViewUsers />} />
-                <Route path="/create_user" element={<CreateUser/>} />
+                <Route path="/create_user" element={<CreateUser />} />
                 <Route path="/view_user" element={<ViewUser />} />
                 <Route path="/edit_user" element={<EditUser />} />
             </Routes >
