@@ -251,11 +251,11 @@
 //     const location = useLocation();
 //     const navigate = useNavigate();
 //     const { API } = useContext(GeneralContext);
-//     const { series, existingSeasons } = location.state || {};
+//     const { series, selectedSeason } = location.state || {};
 //     const seriesId = series?.id;
 
-//     const initialSeasons = existingSeasons && existingSeasons.length > 0
-//         ? existingSeasons.map(seasonNum => ({ seasonNum, episodesAmount: '' }))
+//     const initialSeasons = selectedSeason && selectedSeason.length > 0
+//         ? selectedSeason.map(seasonNum => ({ seasonNum, episodesAmount: '' }))
 //         : [{ seasonNum: 1, episodesAmount: '' }];
 
 //     const [seasons, setSeasons] = useState(initialSeasons);
@@ -361,13 +361,13 @@ const AddEpisodes = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { API } = useContext(GeneralContext);
-    const { series, existingSeasons } = location.state || {};
+    const { series, selectedSeason } = location.state || {};
     const seriesId = series?.id;
 
     // קביעת מספר העונה הבא על פי העונות הקיימות
     const getNextSeasonNum = () => {
-        if (existingSeasons && existingSeasons.length > 0) {
-            const maxSeasonNum = Math.max(...existingSeasons.map(s => s.seasonNum));
+        if (selectedSeason && selectedSeason.length > 0) {
+            const maxSeasonNum = Math.max(...selectedSeason.map(s => s.seasonNum));
             return maxSeasonNum + 1;
         }
         return 1; // אם אין עונות קיימות, מתחילים מעונה 1
@@ -432,10 +432,10 @@ const AddEpisodes = () => {
                     <Col xs={12} sm={8} md={6} lg={4}>
                         <h2>Add Episodes</h2>
                         <Form onSubmit={handleSubmit}>
-                            {existingSeasons && existingSeasons.length > 0 && (
+                            {selectedSeason && selectedSeason.length > 0 && (
                                 <>
                                     <h4>Existing Seasons</h4>
-                                    {existingSeasons.map((season, index) => (
+                                    {selectedSeason.map((season, index) => (
                                         <Form.Group className="mb-3" key={index}>
                                             <Form.Label>Season {season.seasonNum}</Form.Label>
                                             <Form.Text className="text-muted" style={{ fontSize: '1rem' }}>

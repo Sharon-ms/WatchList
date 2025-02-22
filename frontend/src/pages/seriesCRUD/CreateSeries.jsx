@@ -14,6 +14,7 @@ const CreateSeries = () => {
         image: '',
         genre: '',
         year: '',
+        seasonsAmount: '',
     });
 
     const handleChange = (e) => {
@@ -29,8 +30,8 @@ const CreateSeries = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.image || !formData.genre || !formData.year) {
-            alert('Please fill in all fields, including the image, genre, and year.');
+        if (!formData.title || !formData.image || !formData.genre || !formData.year || !formData.seasonsAmount) {
+            alert('Please fill in all fields, including the image, genre, year, and seasons Amount.');
             return;
         }
 
@@ -39,6 +40,7 @@ const CreateSeries = () => {
             image: formData.image,
             genre: formData.genre,
             year: formData.year,
+            seasonsAmount: formData.seasonsAmount,
         };
 
 
@@ -121,6 +123,17 @@ const CreateSeries = () => {
                                     name="year"
                                     onChange={handleChange}
                                     value={formData.year}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formSeasonsAmount">
+                                <Form.Label>Seasons Amount</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter Seasons Amount"
+                                    name="seasonsAmount"
+                                    onChange={handleChange}
+                                    value={formData.seasonsAmount}
                                 />
                             </Form.Group>
 

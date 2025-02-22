@@ -29,13 +29,6 @@ async function addSeries(req, res) {
 
         await seriesService.addSeries(newSeries);
 
-        // for (let i = 1; i <= seasonsNum; i++) {
-        //     await seasonsService.addSeason({
-        //         seriesId: newSeries.id,
-        //         seasonNumber: i
-        //     });
-        // }
-
         res.send(newSeries);
     }
     catch (err) {

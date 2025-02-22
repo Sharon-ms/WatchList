@@ -27,7 +27,11 @@ const seriesModel = (sequelize) => {
             year: {
                 type: DataTypes.INTEGER,
                 required: true
-            }
+            },
+            seasonsAmount: {
+                type: DataTypes.INTEGER,
+                required: true
+            },
         }
     );
 };
