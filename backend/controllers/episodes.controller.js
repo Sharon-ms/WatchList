@@ -25,23 +25,29 @@ async function getEpisodeBySeriesId(req, res) {
 }
 
 async function addEpisodes(req, res) {
-
     try {
-        const { title, seasonNum, episodesAmount, seriesId } = req.body;
+        const { seasons } = req.body;
 
-        // יצירת מערך של פרקים על פי ה-episodeAmount
-        const episodesToAdd = [];
-
-        for (let i = 1; i <= episodesAmount; i++) {
-            episodesToAdd.push({
-                title: `${title} - Episode ${i}`,
-                seasonNum,
-                episodeNum: i,
-                seriesId,
-            });
+        if (!Array.isArray(seasons)) {
+            return res.status(400).send('Seasons must be an array');
         }
 
-        // הוספת הפרקים לטבלה
+        const episodesToAdd = [];
+
+        // לולאת seasons שמכילה את כל העונות עם כמות הפרקים
+        for (let season of seasons) {
+            const { seriesId, seasonNum, episodesAmount } = season;
+
+            for (let i = 1; i <= episodesAmount; i++) {
+                episodesToAdd.push({
+                    title: '', // כותרת נשארת ריקה - תוגדר בצד ה-Frontend
+                    seasonNum,
+                    episodeNum: i,
+                    seriesId,
+                });
+            }
+        }
+
         const result = await episodesService.addEpisodes(episodesToAdd);
 
         res.send(result);
@@ -49,16 +55,25 @@ async function addEpisodes(req, res) {
         res.status(500).send(err.message);
     }
 
-
-
-
     // try {
-    //     const newEpisode = req.body;
-    //     const result = await episodesService.addEpisode(newEpisode);
-    //     res.send(result)
-    // }
-    // catch (err) {
-    //     res.status(500).send(err.message)
+    //     const { title, seasonNum, episodesAmount, seriesId } = req.body;
+
+    //     const episodesToAdd = [];
+
+    //     for (let i = 1; i <= episodesAmount; i++) {
+    //         episodesToAdd.push({
+    //             title: `${title} - Episode ${i}`,
+    //             seasonNum,
+    //             episodeNum: i,
+    //             seriesId,
+    //         });
+    //     }
+
+    //     const result = await episodesService.addEpisodes(episodesToAdd);
+
+    //     res.send(result);
+    // } catch (err) {
+    //     res.status(500).send(err.message);
     // }
 }
 

@@ -14,6 +14,23 @@ const ViewSeries = () => {
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [episodes, setEpisodes] = useState([]);
 
+    // const existingSeasons = [...new Set(episodes?.map(episode => episode.seasonNum))];
+
+    const existingSeasons = episodes
+        ? Object.values(
+            episodes.reduce((acc, episode) => {
+                if (!acc[episode.seasonNum]) {
+                    acc[episode.seasonNum] = {
+                        seasonNum: episode.seasonNum,
+                        episodesAmount: 0,
+                    };
+                }
+                acc[episode.seasonNum].episodesAmount++;
+                return acc;
+            }, {})
+        )
+        : [];
+
     useEffect(() => {
         const fetchEpisodes = async () => {
             try {
@@ -51,7 +68,8 @@ const ViewSeries = () => {
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, a nemo et, dolorem dicta rem incidunt molestiae tenetur itaque labore magnam nam! Deserunt sequi harum magni! Modi esse vel facere.
             </p>
-            <Button variant="success" onClick={() => navigate('/add_episodes', { state: { series } })}>
+            <Button variant="success" onClick={() => navigate('/add_episodes',
+                { state: { series, existingSeasons } })}>
                 Add Episodes
             </Button>
 
