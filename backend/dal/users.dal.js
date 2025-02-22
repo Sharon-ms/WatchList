@@ -3,7 +3,7 @@ const { User, Series, Episode } = require('./db');
 async function getAllUsers(pageNumber, pageSize) {
     return User.findAll(
         {
-            include: [Episode],
+            // include: [Episode],
             offset: pageNumber * pageSize,
             limit: pageSize
         }
