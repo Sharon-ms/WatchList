@@ -7,10 +7,10 @@ import EditSeries from '../pages/seriesCRUD/EditSeries.jsx';
 import AddEpisodes from '../pages/seriesCRUD/AddEpisodes.jsx';
 
 
-import ViewUsers from '../pages/usersCRUD/ViewUsers.jsx';
-import CreateUser from '../pages/usersCRUD/CreateUser.jsx';
-import ViewUser from '../pages/usersCRUD/ViewUser.jsx';
-import EditUser from '../pages/usersCRUD/EditUser.jsx';
+import ViewUsers from '../pages/UsersCRUD/ViewUsers.jsx';
+import CreateUser from '../pages/UsersCRUD/CreateUser.jsx';
+import ViewUser from '../pages/UsersCRUD/ViewUser.jsx';
+import EditUser from '../pages/UsersCRUD/EditUser.jsx';
 
 const RoutesC = () => {
     return (
