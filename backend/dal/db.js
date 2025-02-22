@@ -23,7 +23,7 @@ User.belongsToMany(Episode, { through: "watched" });
 Episode.belongsToMany(User, { through: "watched" });
 
 
-sequelize.sync({ alter: false })
+sequelize.sync({ alter: true })
     .then(() => console.log('✅ Database synced successfully'))
     .catch(err => console.error('❌ Error syncing database:', err));
 
