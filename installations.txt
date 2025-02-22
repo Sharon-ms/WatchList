@@ -1,2 +1,5 @@
 בצד לקוח:
-npm i axios
+
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+
+npm install @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons
