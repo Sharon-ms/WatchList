@@ -14,6 +14,7 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [genreFilter, setGenreFilter] = useState('');
     const [yearFilter, setYearFilter] = useState('');
+    const [isSeriesDeleted, setIsSeriesDeleted] = useState(false);
 
     useEffect(() => {
         fetchSeries();
@@ -44,21 +45,27 @@ const Home = () => {
 
 
 
-
-
-    const handleDeleteSeries = async (e) => {
+    const handleDeleteSeries = async (e, seriesId) => {
         e.stopPropagation();
         if (window.confirm('Are you sure you want to delete this series?')) {
             try {
-                await axios.delete(`${API}/series/${series.id}`);
+                await axios.delete(`${API}/series/${seriesId}`);
                 alert('Series deleted successfully');
-                navigate('/');
+                setIsSeriesDeleted(true);
             } catch (e) {
                 console.error('Error deleting series:', e);
                 alert('Failed to delete series. Please try again later.');
             }
         }
     };
+
+    useEffect(() => {
+        if (isSeriesDeleted) {
+            fetchSeries();
+            setIsSeriesDeleted(false);
+
+        }
+    }, [isSeriesDeleted])
 
     return (
         <div>
@@ -128,7 +135,7 @@ const Home = () => {
                                 }>
                                     Edit Series
                                 </Button>
-                                <Button variant="danger" onClick={handleDeleteSeries}>
+                                <Button variant="danger" onClick={(e) => handleDeleteSeries(e, series.id)}>
                                     Delete Series
                                 </Button>
                             </div>
