@@ -42,12 +42,30 @@ const Home = () => {
         setFilteredSeries(filtered);
     }, [searchTerm, genreFilter, yearFilter, series]);
 
+
+
+
+
+    const handleDeleteSeries = async (e) => {
+        e.stopPropagation();
+        if (window.confirm('Are you sure you want to delete this series?')) {
+            try {
+                await axios.delete(`${API}/series/${series.id}`);
+                alert('Series deleted successfully');
+                navigate('/');
+            } catch (e) {
+                console.error('Error deleting series:', e);
+                alert('Failed to delete series. Please try again later.');
+            }
+        }
+    };
+
     return (
         <div>
-                        <Button variant="primary" onClick={() => navigate("/view_users")}>
-                            Users list
-                        </Button>
-            
+            <Button variant="primary" onClick={() => navigate("/view_users")}>
+                Users list
+            </Button>
+
             <h1>Welcome to WatchList</h1>
             <Button variant="success" onClick={() => navigate('/create_series')}>Add a series</Button>
 
@@ -102,12 +120,23 @@ const Home = () => {
                                 <img className='seriesImg' src={series?.image} alt={series?.title}
                                     style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '10px' }} />
                                 <h5>{series.title}</h5>
+
+                                <Button variant="success" onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate('/edit_series', { state: { series } })
+                                }
+                                }>
+                                    Edit Series
+                                </Button>
+                                <Button variant="danger" onClick={handleDeleteSeries}>
+                                    Delete Series
+                                </Button>
                             </div>
                         </Col>
                     ))}
                 </Row>
             </Container>
-        </div>
+        </div >
     )
 }
 

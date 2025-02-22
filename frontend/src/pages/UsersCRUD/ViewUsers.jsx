@@ -29,9 +29,9 @@ const ViewUsers = () => {
 
     return (
         <div>
-                        <Button variant="primary" onClick={() => navigate('/')}>
-                            Back to Home
-                        </Button>
+            <Button variant="primary" onClick={() => navigate('/')}>
+                Back to Home
+            </Button>
             <h1>Users list</h1>
             <Button variant="success" onClick={() => navigate('/create_user')}>Add an user</Button>
             <Container>

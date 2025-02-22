@@ -25,23 +25,18 @@ async function getSeriesById(req, res) {
 
 async function addSeries(req, res) {
     try {
-        const { title, seasonsNum, genre, image, year } = req.body;
+        const newSeries = req.body;
 
-        const newSeries = await seriesService.addSeries({
-            title,
-            image,
-            genre,
-            year
-        });
+        await seriesService.addSeries(newSeries);
 
-        for (let i = 1; i <= seasonsNum; i++) {
-            await seasonsService.addSeason({
-                seriesId: newSeries.id,
-                seasonNumber: i
-            });
-        }
+        // for (let i = 1; i <= seasonsNum; i++) {
+        //     await seasonsService.addSeason({
+        //         seriesId: newSeries.id,
+        //         seasonNumber: i
+        //     });
+        // }
 
-        res.send(title, seasonsNum, genre, image, year)
+        res.send(newSeries);
     }
     catch (err) {
         res.status(500).send(err.message)

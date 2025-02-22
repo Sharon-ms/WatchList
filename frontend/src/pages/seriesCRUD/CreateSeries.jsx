@@ -12,7 +12,6 @@ const CreateSeries = () => {
         id: '',
         title: '',
         image: '',
-        seasonsNum: 0,
         genre: '',
         year: '',
     });
@@ -30,8 +29,7 @@ const CreateSeries = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.image || !formData.seasonsNum
-            || !formData.genre || !formData.year) {
+        if (!formData.title || !formData.image || !formData.genre || !formData.year) {
             alert('Please fill in all fields, including the image, genre, and year.');
             return;
         }
@@ -39,7 +37,6 @@ const CreateSeries = () => {
         const dataToSubmit = {
             title: formData.title,
             image: formData.image,
-            seasonsNum: formData.seasonsNum,
             genre: formData.genre,
             year: formData.year,
         };
@@ -97,17 +94,6 @@ const CreateSeries = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formTitle">
-                                <Form.Label>Seasons number</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    placeholder="Enter title"
-                                    name="seasonsNum"
-                                    value={formData.seasonsNum}
-                                    onChange={handleChange}
-                                />
-
-                            </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGenre">
                                 <Form.Label>Genre</Form.Label>

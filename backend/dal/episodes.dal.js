@@ -10,12 +10,17 @@ async function getAllEpisodes(pageNumber, pageSize) {
     );
 }
 
-async function getEpisodeById(id) {
-    return Episode.findByPk(id, { include: [Series] })
+async function getEpisodeBySeriesId(seriesId) {
+    // return Episode.findByPk(id,
+    // { include: [Series]
+    return Episode.findAll({
+        where: { seriesId }
+    });
 }
 
-async function addEpisode(newEpisode) {
-    return Episode.create(newEpisode)
+async function addEpisodes(newEpisode) {
+    // return Episode.create(newEpisode)
+    return Episode.bulkCreate(newEpisode)
 }
 
 async function addWatch(userId, episodeId) {
@@ -38,8 +43,8 @@ async function deleteEpisode(id) {
 
 module.exports = {
     getAllEpisodes,
-    getEpisodeById,
-    addEpisode,
+    getEpisodeBySeriesId,
+    addEpisodes,
     addWatch,
     updateEpisode,
     deleteEpisode
