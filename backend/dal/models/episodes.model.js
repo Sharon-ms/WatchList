@@ -13,19 +13,15 @@ const episodeModel = (sequelize) => {
             },
             title: {
                 type: DataTypes.STRING,
-                allowNull: false
-            },
-            seriesId: {
-                type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             seasonNum: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             episodeNum: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             }
         }
     );

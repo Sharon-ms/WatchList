@@ -23,6 +23,41 @@ async function getUserById(req, res) {
     }
 }
 
+async function getUserWatchedEpisodes(req, res) {
+    try {
+        const { id } = req.params;
+        console.log("Fetching watched episodes for user:", id);
+
+        const episodes = await usersService.getUserWatchedEpisodes(id);
+
+        if (episodes.error) {
+            return res.status(404).json({ message: episodes.error });
+        }
+
+        res.json(episodes);
+    } catch (error) {
+        console.error("Server error:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+
+const deleteWatchedEpisode = async (req, res) => {
+    const { userId, episodeId } = req.params;
+
+    try {
+        const result = await usersService.deleteWatchedEpisode(userId, episodeId);
+        if (result) {
+            return res.status(200).json({ message: "Watch record deleted successfully" });
+        }
+        return res.status(404).json({ message: "Watch record not found" });
+    } catch (error) {
+        console.error("Error removing watch record:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
 async function addUser(req, res) {
     try {
         const newUser = req.body;
@@ -60,6 +95,8 @@ async function deleteUser(req, res) {
 module.exports = {
     getAllUsers,
     getUserById,
+    getUserWatchedEpisodes,
+    deleteWatchedEpisode,
     addUser,
     updateUser,
     deleteUser

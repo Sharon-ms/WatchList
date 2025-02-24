@@ -8,6 +8,10 @@ router.get('/', usersController.getAllUsers);
 
 router.get('/:id', usersController.getUserById);
 
+router.get("/:id/watched", usersController.getUserWatchedEpisodes);
+
+router.delete('/:userId/watched/:episodeId', usersController.deleteWatchedEpisode);
+
 router.post('/', usersController.addUser);
 
 router.patch('/:id', usersController.updateUser);

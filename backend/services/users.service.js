@@ -8,6 +8,14 @@ async function getUserById(id) {
     return usersDAL.getUserById(id)
 }
 
+async function getUserWatchedEpisodes(id) {
+    return usersDAL.getUserWatchedEpisodes(id)
+}
+
+async function deleteWatchedEpisode(userId, episodeId) {
+    return usersDAL.deleteWatchedEpisode(userId, episodeId)
+}
+
 async function addUser(newUser) {
     return usersDAL.addUser(newUser)
 }
@@ -23,6 +31,8 @@ async function deleteUser(id) {
 module.exports = {
     getAllUsers,
     getUserById,
+    getUserWatchedEpisodes,
+    deleteWatchedEpisode,
     addUser,
     updateUser,
     deleteUser

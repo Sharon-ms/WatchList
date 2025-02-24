@@ -16,6 +16,11 @@ async function addWatch(userId, episodeId) {
     return episodesDAL.addWatch(userId, episodeId)
 }
 
+async function getUsersWhoWatched(id) {
+    return episodesDAL.getUsersWhoWatched(id)
+}
+
+
 async function updateEpisode(id, updates) {
     return episodesDAL.updateEpisode(id, updates)
 }
@@ -29,6 +34,7 @@ module.exports = {
     getEpisodeBySeriesId,
     addEpisodes,
     addWatch,
+    getUsersWhoWatched,
     updateEpisode,
     deleteEpisode
 }

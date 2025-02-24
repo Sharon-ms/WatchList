@@ -125,9 +125,9 @@ const ViewSeries = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { API } = useContext(GeneralContext);
-    const { series } = location.state || {};
+    const { series, seasonSelected } = location.state || {};
 
-    const [selectedSeason, setSelectedSeason] = useState(null);
+    const [selectedSeason, setSelectedSeason] = useState(seasonSelected || null);
     const [episodes, setEpisodes] = useState([]);
     const [newEpisodes, setNewEpisodes] = useState([]);
 
@@ -142,7 +142,7 @@ const ViewSeries = () => {
         };
 
         fetchEpisodes();
-    }, [API, series.id]);
+    }, [API, series?.id]);
 
     const handleSeasonChange = (e) => {
         setSelectedSeason(Number(e.target.value));
@@ -202,7 +202,7 @@ const ViewSeries = () => {
                             <Form.Group>
                                 <Form.Select onChange={handleSeasonChange} defaultValue="">
                                     <option value="">Select a season</option>
-                                    {[...Array(series.seasonsAmount)].map((_, index) => (
+                                    {[...Array(series?.seasonsAmount)].map((_, index) => (
                                         <option key={`season-${index + 1}`} value={index + 1}>
                                             Season {index + 1}
                                         </option>
@@ -211,56 +211,31 @@ const ViewSeries = () => {
                             </Form.Group>
 
                             <br />
-                            <Button variant="success" onClick={handleAddEpisode} disabled={!selectedSeason}>
+                            {/* <Button variant="success" onClick={handleAddEpisode} disabled={!selectedSeason}>
                                 Add Episode
-                            </Button>
+                            </Button> */}
+
+                            <Button variant="success" onClick={() => navigate('/create_episode', {state: {seriesId: series.id, seasonNum: selectedSeason}})} disabled={!selectedSeason} >Create episode</Button>
+
+
 
                             {selectedSeason && (
-                                <div>
-                                    <ul>
-                                        {episodes
-                                            .filter(e => e.seasonNum === selectedSeason)
-                                            .map((episode) => (
-                                                <li key={episode.episodeNum}>
-                                                    Episode {episode.episodeNum}
-                                                    <br />
-                                                    <Form.Select>
-                                                        <option>Users List</option>
-                                                        <option>Add Here Users</option>
-                                                    </Form.Select>
-                                                    <br />
-                                                </li>
-                                            ))}
-                                    </ul>
+                                            <Container>
+                                                <Row>
+                                                    {episodes.filter(e => e.seasonNum === selectedSeason).map((episode) => (
+                                                        <Col key={episode.id} md={4}>
+                                                            <div
+                                                                onClick={() => navigate('/view_episode', { state: { episode, series } })}
+                                                                style={{ cursor: 'pointer', padding: '20px' }}
+                                                            >
+                                                                <h2>{episode.title}</h2>
+                                                                <h4>{episode.episodeNum}</h4>
+                                                            </div>
+                                                        </Col>
+                                                    ))}
+                                                </Row>
+                                            </Container>
 
-                                    {/* טופס להוספת פרקים חדשים */}
-                                    {newEpisodes.length > 0 && (
-                                        <Form onSubmit={handleSubmit}>
-                                            {newEpisodes.map((episode, index) => (
-                                                <div key={index} className="mb-3">
-                                                    <Form.Control
-                                                        type="number"
-                                                        placeholder="Episode Number"
-                                                        value={episode.episodeNum}
-                                                        onChange={(e) => handleEpisodeChange(index, 'episodeNum', e.target.value)}
-                                                        required
-                                                    />
-                                                    <br />
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="Episode Title"
-                                                        value={episode.title}
-                                                        onChange={(e) => handleEpisodeChange(index, 'title', e.target.value)}
-                                                        required
-                                                    />
-                                                </div>
-                                            ))}
-                                            <Button variant="primary" type="submit">
-                                                Submit Episodes
-                                            </Button>
-                                        </Form>
-                                    )}
-                                </div>
                             )}
                         </div>
                     </Col >

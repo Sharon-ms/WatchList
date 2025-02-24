@@ -4,18 +4,16 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { GeneralContext } from '../../App';
 
-const EditSeries = () => {
+const EditEpisode = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { API } = useContext(GeneralContext);
-    const { series } = location.state || {};
+    const { episode } = location.state || {};
 
     const [formData, setFormData] = useState({
-        title: series?.title || "",
-        image: series?.image || "",
-        genre: series?.genre || "",
-        year: series?.year || "",
-        seasonsAmount: series?.seasonsAmount || ""
+        title: episode?.title || "",
+        seasonNum: episode?.seasonNum || "",
+        episodeNum: episode?.episodeNum || ""
     });
 
     const handleChange = (e) => {
@@ -24,12 +22,12 @@ const EditSeries = () => {
 
     const handleSave = async () => {
         try {
-            await axios.patch(`${API}/series/${series.id}`, formData);
-            alert('Series updated successfully');
-            navigate('/');
+            await axios.patch(`${API}/episodes/${episode.id}`, formData);
+            alert('Episode updated successfully');
+            navigate(-1);
         } catch (e) {
-            console.error('Error updating series:', e);
-            alert('Failed to update series. Please try again later.');
+            console.error('Error updating episode:', e);
+            alert('Failed to update episode. Please try again later.');
         }
     };
 
@@ -40,7 +38,7 @@ const EditSeries = () => {
                     <Button variant="primary" onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                    <h1>Edit Series</h1>
+                    <h1>Edit Episode</h1>
                     <Form>
                         <Form.Group>
                             <Form.Label>Title</Form.Label>
@@ -48,25 +46,14 @@ const EditSeries = () => {
                         </Form.Group>
 
                         <Form.Group>
-                            <Form.Label>Image URL</Form.Label>
-                            <Form.Control type="text" name="image" value={formData.image} onChange={handleChange} />
+                            <Form.Label>Season number</Form.Label>
+                            <Form.Control type="number" name="seasonNum" value={formData.seasonNum} onChange={handleChange} />
                         </Form.Group>
 
                         <Form.Group>
-                            <Form.Label>Genre</Form.Label>
-                            <Form.Control type="text" name="genre" value={formData.genre} onChange={handleChange} />
+                            <Form.Label>Episode number</Form.Label>
+                            <Form.Control type="number" name="episodeNum" value={formData.episodeNum} onChange={handleChange} />
                         </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Year</Form.Label>
-                            <Form.Control type="number" name="year" value={formData.year} onChange={handleChange} />
-                        </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Seasons Amount</Form.Label>
-                            <Form.Control type="number" name="seasonsAmount" value={formData.seasonsAmount} onChange={handleChange} />
-                        </Form.Group>
-
 
                         <Button variant="success" onClick={handleSave} className="mt-3">
                             Save Changes
@@ -78,4 +65,4 @@ const EditSeries = () => {
     );
 };
 
-export default EditSeries;
+export default EditEpisode;

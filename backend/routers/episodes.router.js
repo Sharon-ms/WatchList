@@ -35,6 +35,10 @@ router.get('/:seriesId', episodesController.getEpisodeBySeriesId);
 // הוספת פרק חדש לעונה
 router.post('/', episodesController.addEpisodes);
 
+router.post('/addWatch', episodesController.addWatch);
+
+router.get('/:id/users', episodesController.getUsersWhoWatched);
+
 // עדכון פרק לפי ID
 router.patch('/:id', episodesController.updateEpisode);
 

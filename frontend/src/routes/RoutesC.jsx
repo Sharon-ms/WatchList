@@ -12,6 +12,10 @@ import CreateUser from '../pages/usersCRUD/CreateUser.jsx';
 import ViewUser from '../pages/usersCRUD/ViewUser.jsx';
 import EditUser from '../pages/usersCRUD/EditUser.jsx';
 
+import CreateEpisode from '../pages/episodesCRUD/CreateEpisode.jsx';
+import ViewEpisode from '../pages/episodesCRUD/ViewEpisode.jsx';
+import EditEpisode from '../pages/episodesCRUD/EditEpisode.jsx';
+
 const RoutesC = () => {
     return (
         <div>
@@ -23,6 +27,9 @@ const RoutesC = () => {
                 <Route path="/edit_series" element={<EditSeries />} />
 
                 <Route path="/add_episodes" element={<AddEpisodes />} />
+                <Route path="/create_episode" element={<CreateEpisode />} />
+                <Route path="/view_episode" element={<ViewEpisode />} />
+                <Route path="/edit_episode" element={<EditEpisode />} />
 
 
                 <Route path="/view_users" element={<ViewUsers />} />

@@ -25,30 +25,41 @@ async function getEpisodeBySeriesId(req, res) {
 }
 
 async function addEpisodes(req, res) {
-
     try {
-        const { title, seasonNum, episodesAmount, seriesId } = req.body;
-
-        if (!title || !seasonNum || !episodesAmount || !seriesId) {
-            return res.status(400).send('Missing required fields');
-        }
-
-        const episodesToAdd = [];
-
-        for (let i = 1; i <= episodesAmount; i++) {
-            episodesToAdd.push({
-                title: title,
-                seasonNum,
-                episodeNum: i,
-                seriesId,
-            });
-        }
-
-        const result = await episodesService.addEpisodes(episodesToAdd);
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(err.message);
+        const newEpisode = req.body;
+        const result = await episodesService.addEpisodes(newEpisode);
+        res.send(result)
     }
+    catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+// async function addEpisodes(req, res) {
+
+//     try {
+//         const { title, seriesId, seasonNum, episodeNum } = req.body;
+
+//         if (!title || !seasonNum || !episodeNum || !seriesId) {
+//             return res.status(400).send('Missing required fields');
+//         }
+
+//         const episodesToAdd = [];
+
+//         for (let i = 1; i <= episodeNum; i++) {
+//             episodesToAdd.push({
+//                 title: title,
+//                 seasonNum,
+//                 episodeNum: i,
+//                 seriesId,
+//             });
+//         }
+
+//         const result = await episodesService.addEpisodes(episodesToAdd);
+//         res.send(result);
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//     }
 
 
     // try {
@@ -101,7 +112,7 @@ async function addEpisodes(req, res) {
     // } catch (err) {
     //     res.status(500).send(err.message);
     // }
-}
+// }
 
 async function addWatch(req, res) {
     try {
@@ -113,6 +124,38 @@ async function addWatch(req, res) {
         res.status(500).send(err.message)
     }
 }
+
+async function getUsersWhoWatched(req, res) {
+    try {
+        const { id } = req.params;
+        console.log("Received request for users in episode:", id);
+
+        const users = await episodesService.getUsersWhoWatched(id);
+
+        if (users.error) {
+            return res.status(404).json({ message: users.error });
+        }
+
+        res.json(users);
+    } catch (error) {
+        console.error("Server error:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+
+// async function getUsersWhoWatched(req, res) {
+//     try {
+//         const episodeId  = req.params;
+//         const result = await episodesService.getUsersWhoWatched(Number(episodeId));
+//         res.send(result)
+//     }
+//     catch (err) {
+//         console.error("Error fetching users who watched:", err);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// }
+
 
 async function updateEpisode(req, res) {
     try {
@@ -142,6 +185,7 @@ module.exports = {
     getEpisodeBySeriesId,
     addEpisodes,
     addWatch,
+    getUsersWhoWatched,
     updateEpisode,
     deleteEpisode
 }
