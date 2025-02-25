@@ -253,7 +253,7 @@ const ViewUser = () => {
                                             <ListGroup>
                                                 {episodes.map(episode => (
                                                     <ListGroup.Item key={episode.id} className="d-flex justify-content-between align-items-center">
-                                                        <Button variant="link" onClick={() => navigate('/view_episode', { state: { episode } })}>
+                                                        <Button variant="link" onClick={() => navigate('/view_episode', { state: { episodeId: episode.id } })}>
                                                             {episode.episodeNum}: {episode.title}
                                                         </Button>
                                                         <Button variant="danger" size="sm" onClick={() => handleDeleteWatch(episode.id)}>

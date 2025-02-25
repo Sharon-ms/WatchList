@@ -48,17 +48,34 @@ async function addEpisodes(req, res) {
     }
 }
 
-
 async function addWatch(req, res) {
     try {
         const { userId, episodeId } = req.body;
+        console.log("Received data:", { userId, episodeId });
+
+        if (!userId || !episodeId) {
+            return res.status(400).send("Missing userId or episodeId");
+        }
+
         const result = await episodesService.addWatch(userId, episodeId);
-        res.send(result)
+        res.send(result);
     }
     catch (err) {
-        res.status(500).send(err.message)
+        console.error("Error in addWatch:", err);
+        res.status(500).send(err.message);
     }
 }
+
+// async function addWatch(req, res) {
+//     try {
+//         const { userId, episodeId } = req.body;
+//         const result = await episodesService.addWatch(userId, episodeId);
+//         res.send(result)
+//     }
+//     catch (err) {
+//         res.status(500).send(err.message)
+//     }
+// }
 
 async function getUsersWhoWatched(req, res) {
     try {
