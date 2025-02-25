@@ -1,5 +1,4 @@
 const seriesService = require('../services/series.service');
-const seasonsService = require('../services/seasons.service');
 
 async function getAllSeries(req, res) {
     try {

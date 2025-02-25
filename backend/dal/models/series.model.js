@@ -17,7 +17,7 @@ const seriesModel = (sequelize) => {
                 allowNull: false
             },
             image: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(2048),
                 allowNull: false
             },
             genre: {
