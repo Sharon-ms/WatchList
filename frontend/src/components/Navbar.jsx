@@ -13,7 +13,7 @@ function NavbarC() {
     return (
         <>
             {['lg'].map((expand) => (
-                <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+                <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3 " fixed="top">
                     <Container fluid>
                         <Navbar.Brand href=".">
                             <img src="/watchlistIcon.png" alt="watchlistIcon"
@@ -33,7 +33,7 @@ function NavbarC() {
                             <Offcanvas.Body>
                                 <Nav className="justify-content-end flex-grow-1 pe-3">
 
-                                    <Nav.Link href="#action2">Users List</Nav.Link>
+                                    <Nav.Link href="/view_users">Users List</Nav.Link>
                                     {/* <NavDropdown
                                         title="Dropdown"
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}

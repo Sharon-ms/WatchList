@@ -4,8 +4,13 @@ async function getAllEpisodes(pageNumber, pageSize) {
     return episodesDAL.getAllEpisodes(pageNumber, pageSize);
 }
 
-async function getEpisodeBySeriesId(id) {
-    return episodesDAL.getEpisodeBySeriesId(id)
+async function getEpisodeById(id) {
+    return episodesDAL.getEpisodeById(id)
+}
+
+
+async function getEpisodesBySeriesId(seriesId) {
+    return episodesDAL.getEpisodesBySeriesId(seriesId)
 }
 
 async function addEpisodes(newEpisode) {
@@ -31,7 +36,8 @@ async function deleteEpisode(id) {
 
 module.exports = {
     getAllEpisodes,
-    getEpisodeBySeriesId,
+    getEpisodeById,
+    getEpisodesBySeriesId,
     addEpisodes,
     addWatch,
     getUsersWhoWatched,

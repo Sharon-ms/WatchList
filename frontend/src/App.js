@@ -13,7 +13,9 @@ function App() {
   return (
     <GeneralContext.Provider value={{ API }}>
       <div className="App">
-        <header><NavbarC /></header>
+        <header>
+          <NavbarC />
+        </header>
         <Routes />
       </div>
     </GeneralContext.Provider>

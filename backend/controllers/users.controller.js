@@ -9,7 +9,6 @@ async function getAllUsers(req, res) {
     catch (err) {
         res.status(500).send(err.message)
     }
-
 }
 
 async function getUserById(req, res) {

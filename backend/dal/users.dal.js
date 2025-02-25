@@ -94,10 +94,10 @@ const deleteWatchedEpisode = async (userId, episodeId) => {
     try {
         // מוצאים את המשתמש לפי מזהה
         const user = await User.findByPk(userId);
-        
+
         if (!user) {
             console.error("User not found");
-            return false;  
+            return false;
         }
 
         const result = await user.removeEpisode(episodeId);

@@ -13,10 +13,23 @@ async function getAllEpisodes(req, res) {
 
 }
 
-async function getEpisodeBySeriesId(req, res) {
+async function getEpisodeById(req, res) {
+    try {
+        const id = Number(req.params.id);
+        console.log(id);
+
+        const episode = await episodesService.getEpisodeById(id);
+        res.send(episode)
+    }
+    catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+async function getEpisodesBySeriesId(req, res) {
     try {
         const seriesId = Number(req.params.seriesId);
-        const episode = await episodesService.getEpisodeBySeriesId(seriesId);
+        const episode = await episodesService.getEpisodesBySeriesId(seriesId);
         res.send(episode)
     }
     catch (err) {
@@ -62,56 +75,56 @@ async function addEpisodes(req, res) {
 //     }
 
 
-    // try {
-    //     const { seasons } = req.body;
+// try {
+//     const { seasons } = req.body;
 
-    //     if (!Array.isArray(seasons)) {
-    //         return res.status(400).send('Seasons must be an array');
-    //     }
+//     if (!Array.isArray(seasons)) {
+//         return res.status(400).send('Seasons must be an array');
+//     }
 
-    //     const episodesToAdd = [];
+//     const episodesToAdd = [];
 
-    //     // לולאת seasons שמכילה את כל העונות עם כמות הפרקים
-    //     for (let season of seasons) {
-    //         const { title, seriesId, seasonNum, episodesAmount } = season;
+//     // לולאת seasons שמכילה את כל העונות עם כמות הפרקים
+//     for (let season of seasons) {
+//         const { title, seriesId, seasonNum, episodesAmount } = season;
 
-    //         for (let i = 1; i <= episodesAmount; i++) {
-    //             episodesToAdd.push({
-    //                 title: '', // כותרת נשארת ריקה - תוגדר בצד ה-Frontend
-    //                 seasonNum,
-    //                 episodeNum: i,
-    //                 seriesId,
-    //             });
-    //         }
-    //     }
+//         for (let i = 1; i <= episodesAmount; i++) {
+//             episodesToAdd.push({
+//                 title: '', // כותרת נשארת ריקה - תוגדר בצד ה-Frontend
+//                 seasonNum,
+//                 episodeNum: i,
+//                 seriesId,
+//             });
+//         }
+//     }
 
-    //     const result = await episodesService.addEpisodes(episodesToAdd);
+//     const result = await episodesService.addEpisodes(episodesToAdd);
 
-    //     res.send(result);
-    // } catch (err) {
-    //     res.status(500).send(err.message);
-    // }
+//     res.send(result);
+// } catch (err) {
+//     res.status(500).send(err.message);
+// }
 
-    // try {
-    //     const { title, seasonNum, episodesAmount, seriesId } = req.body;
+// try {
+//     const { title, seasonNum, episodesAmount, seriesId } = req.body;
 
-    //     const episodesToAdd = [];
+//     const episodesToAdd = [];
 
-    //     for (let i = 1; i <= episodesAmount; i++) {
-    //         episodesToAdd.push({
-    //             title: `${title} - Episode ${i}`,
-    //             seasonNum,
-    //             episodeNum: i,
-    //             seriesId,
-    //         });
-    //     }
+//     for (let i = 1; i <= episodesAmount; i++) {
+//         episodesToAdd.push({
+//             title: `${title} - Episode ${i}`,
+//             seasonNum,
+//             episodeNum: i,
+//             seriesId,
+//         });
+//     }
 
-    //     const result = await episodesService.addEpisodes(episodesToAdd);
+//     const result = await episodesService.addEpisodes(episodesToAdd);
 
-    //     res.send(result);
-    // } catch (err) {
-    //     res.status(500).send(err.message);
-    // }
+//     res.send(result);
+// } catch (err) {
+//     res.status(500).send(err.message);
+// }
 // }
 
 async function addWatch(req, res) {
@@ -182,7 +195,8 @@ async function deleteEpisode(req, res) {
 
 module.exports = {
     getAllEpisodes,
-    getEpisodeBySeriesId,
+    getEpisodeById,
+    getEpisodesBySeriesId,
     addEpisodes,
     addWatch,
     getUsersWhoWatched,

@@ -10,7 +10,12 @@ async function getAllEpisodes(pageNumber, pageSize) {
     );
 }
 
-async function getEpisodeBySeriesId(seriesId) {
+async function getEpisodeById(id) {
+    return Episode.findByPk(id);
+}
+
+
+async function getEpisodesBySeriesId(seriesId) {
     // return Episode.findByPk(id,
     // { include: [Series]
     return Episode.findAll({
@@ -26,7 +31,7 @@ async function addEpisodes(newEpisode) {
 async function addWatch(userId, episodeId) {
     const user = await User.findByPk(userId);
     const episode = await Episode.findByPk(episodeId);
-    
+
     if (!user || !episode) {
         throw new Error("User or Episode not found");
     }
@@ -51,7 +56,7 @@ async function getUsersWhoWatched(episodeId) {
 
         if (!episode) {
             console.warn(`Episode with ID ${episodeId} not found`);
-            return { error: "Episode not found" }; 
+            return { error: "Episode not found" };
         }
 
         console.log("Users found for episode:", episode.Users);
@@ -95,7 +100,8 @@ async function deleteEpisode(id) {
 
 module.exports = {
     getAllEpisodes,
-    getEpisodeBySeriesId,
+    getEpisodeById,
+    getEpisodesBySeriesId,
     addEpisodes,
     addWatch,
     getUsersWhoWatched,

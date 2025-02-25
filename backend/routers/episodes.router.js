@@ -30,7 +30,10 @@ const episodesController = require('../controllers/episodes.controller');
 router.get('/', episodesController.getAllEpisodes);
 
 // קבלת פרק לפי ID
-router.get('/:seriesId', episodesController.getEpisodeBySeriesId);
+router.get('/:id', episodesController.getEpisodeById);
+
+// קבלת פרקים לפי seriesId
+router.get('/:seriesId/episodes', episodesController.getEpisodesBySeriesId);
 
 // הוספת פרק חדש לעונה
 router.post('/', episodesController.addEpisodes);
