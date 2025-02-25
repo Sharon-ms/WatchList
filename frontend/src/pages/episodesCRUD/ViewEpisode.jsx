@@ -206,9 +206,12 @@ const ViewEpisode = () => {
         }
     };
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (pageNumber = 0, pageSize = 10) => {
         try {
-            const response = await axios.get(`${API}/users`);
+            const response = await axios.get(`${API}/users`, {
+                params: { pageNumber, pageSize }
+
+            });
             setUsers(response.data);
         } catch (error) {
             console.error('Error fetching users:', error);
